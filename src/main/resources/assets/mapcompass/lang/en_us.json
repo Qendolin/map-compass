@@ -1,0 +1,12 @@
+{
+  "text.mapcompass.config.title": "Map Compass Settings",
+  "text.mapcompass.config.entry.side": "Compass side",
+  "text.mapcompass.option.side.automatic": "Automatic",
+  "text.mapcompass.option.side.left": "Left",
+  "text.mapcompass.option.side.right": "Right",
+  "text.mapcompass.option.side.hidden": "Hidden",
+  "text.mapcompass.map.cardinal_north": "N",
+  "text.mapcompass.map.cardinal_south": "S",
+  "text.mapcompass.map.cardinal_east": "E",
+  "text.mapcompass.map.cardinal_west": "W"
+}

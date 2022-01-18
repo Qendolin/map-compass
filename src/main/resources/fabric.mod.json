@@ -1,38 +1,40 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "mapcompass",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Map Compass",
+  "description": "Adds a compass to maps.",
   "authors": [
-    "Me!"
+    "Qendolin"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Qendolin/map-compass",
+    "sources": "https://github.com/Qendolin/map-compass"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MPL-2.0",
+  "icon": "assets/mapcompass/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "com.qendolin.mapcompass.Main"
+    ],
+    "modmenu": [
+      "com.qendolin.mapcompass.ModMenuIntegration"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "mapcompass.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.11.3",
-    "fabric": "*",
-    "minecraft": "1.18.x",
-    "java": ">=17"
+    "minecraft": "*",
+    "java": ">=16"
   },
   "suggests": {
-    "another-mod": "*"
+    "mod-menu": "*"
   }
 }

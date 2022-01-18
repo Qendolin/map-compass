@@ -1,9 +1,9 @@
-# Fabric Example Mod
+# Map Compass
 
-## Setup
+![Showcase](assets/showcase.png)
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+Adds a compass to maps.
 
 ## License
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+This project is licensed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/FAQ/).
