@@ -6,7 +6,7 @@
   "mixins": [
   ],
   "client": [
-    "MapMixin"
+    "HeldItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

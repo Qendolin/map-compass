@@ -8,6 +8,29 @@ public class Config implements ModConfig {
     @Entry.EnumButton()
     public CompassSide side = CompassSide.AUTOMATIC;
 
+    @Entry.ToggleButton()
+    public boolean reverseEW = false;
+
+    @Entry.EnumButton()
+    public CompassSize size = CompassSize.AUTOMATIC;
+
+    public enum CompassSize {
+        AUTOMATIC(0), SMALL(1f), MEDIUM(1.5f), LARGE(2f);
+
+        private final TranslatableText text;
+        public final float scale;
+
+        CompassSize(float scale) {
+            this.text = new TranslatableText("text.mapcompass.option.size." + this.name().toLowerCase());
+            this.scale = scale;
+        }
+
+        @Override
+        public String toString() {
+            return text.getString();
+        }
+    }
+
     public enum CompassSide {
         AUTOMATIC, LEFT, RIGHT, HIDDEN;
 
