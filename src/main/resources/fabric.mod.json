@@ -35,6 +35,6 @@
     "java": ">=16"
   },
   "suggests": {
-    "mod-menu": "*"
+    "modmenu": "*"
   }
 }
