@@ -8,9 +8,9 @@ import net.minecraft.text.LiteralText;
 import java.util.function.Function;
 
 public class Widgets {
-    public static RangeWidget<Integer> intRange(int x, int y, int width, int min, int max, int value, Function<Integer, String> messageMapper) {
+    public static RangeWidget<Integer> intRange(int x, int y, int width, int min, int max, int step, int value, Function<Integer, String> messageMapper) {
         if(messageMapper == null) messageMapper = v -> String.format("%d", v);
-        return new RangeWidget<>(x, y, width, value, v -> RangeWidget.mapIntToRange(v, min, max), messageMapper);
+        return new RangeWidget<>(x, y, width, value, v -> RangeWidget.mapIntToRange(v, min, max, step), messageMapper);
     }
 
     public static RangeWidget<Float> floatRange(int x, int y, int width, float min, float max, float step, float value, Function<Float, String> messageMapper) {
@@ -63,8 +63,9 @@ class RangeWidget<T extends Number> extends SliderWidget implements ValueHolder<
         return (float) (Math.round(v * 10e5) / 10e5);
     }
 
-    public static int mapIntToRange(Double v, int min, int max) {
+    public static int mapIntToRange(Double v, int min, int max, int step) {
         v = v * (max - min) + min;
+        v = (double) Math.round(v / step) * step;
         return (int) Math.round(v);
     }
 

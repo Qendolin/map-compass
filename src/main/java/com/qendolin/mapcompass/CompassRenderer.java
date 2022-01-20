@@ -15,6 +15,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3f;
 
 import java.util.Objects;
@@ -58,13 +59,16 @@ public class CompassRenderer {
         if (player.getStackInHand(Hand.MAIN_HAND) != map && player.getStackInHand(Hand.OFF_HAND) != map) return;
 
         Vec3f compassPos = LEFT_COMPASS_POS.copy();
+        compassPos.add(Main.CONFIG.offsetX, Main.CONFIG.offsetY, 0);
         boolean renderOnRight = renderOnRight(player, map);
         if (renderOnRight) {
             compassPos.set(128 - compassPos.getX(), compassPos.getY(), compassPos.getZ());
         }
 
         float size = getCompassScale();
-        compassPos.add((renderOnRight ? CARDINAL_DISTANCE : -CARDINAL_DISTANCE) * (size-1), CARDINAL_DISTANCE *(size-1), 0);
+        Vec2f compassSizeOffset = Main.CONFIG.offsetDirection.vec;
+        if(renderOnRight) compassSizeOffset = new Vec2f(-compassSizeOffset.x, compassSizeOffset.y);
+        compassPos.add(compassSizeOffset.x * (CARDINAL_DISTANCE+1) * (size-1), compassSizeOffset.y * (CARDINAL_DISTANCE+1) *(size-1), 0);
 
         matrices.push();
         matrices.translate(compassPos.getX(), compassPos.getY(), compassPos.getZ());
