@@ -3,7 +3,7 @@ package com.qendolin.mapcompass.config;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 import java.util.function.Function;
 
@@ -71,7 +71,7 @@ class RangeWidget<T extends Number> extends SliderWidget implements ValueHolder<
 
     @Override
     protected void updateMessage() {
-        setMessage(new LiteralText(messageMapper.apply(mappedValue)));
+        setMessage(Text.literal(messageMapper.apply(mappedValue)));
     }
 
     @Override
@@ -109,7 +109,7 @@ class ToggleButtonWidget extends ButtonWidget implements ValueHolder<Boolean> {
     }
 
     protected void updateMessage() {
-        setMessage(new LiteralText(messageMapper.apply(value)));
+        setMessage(Text.literal(messageMapper.apply(value)));
     }
 
     @Override
@@ -145,7 +145,7 @@ class EnumButtonWidget extends ButtonWidget implements ValueHolder<Enum<?>> {
     }
 
     protected void updateMessage() {
-        setMessage(new LiteralText(messageMapper.apply(getValue())));
+        setMessage(Text.literal(messageMapper.apply(getValue())));
     }
 
     @Override

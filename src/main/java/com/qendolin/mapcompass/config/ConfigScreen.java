@@ -13,7 +13,6 @@ import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -46,7 +45,7 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
     }
 
     public ConfigScreen(Screen parent, C config) {
-        super(new TranslatableText("text." + config.getId()+".config.title"));
+        super(Text.translatable("text." + config.getId()+".config.title"));
         this.parent = parent;
         this.config = config;
         this.onClose = ConfigScreen::onCloseDefault;
@@ -54,7 +53,7 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
     }
 
     public ConfigScreen(Screen parent, C config, CloseAction<C> onClose) {
-        super(new TranslatableText("text." + config.getId() + ".config.title"));
+        super(Text.translatable("text." + config.getId() + ".config.title"));
         this.parent = parent;
         this.config = config;
         this.onClose = onClose;
@@ -166,15 +165,15 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
 
         List<EntryValueSetter<?>> valueSetters = new ArrayList<>();
 
-        doneButton = addDrawableChild(new ButtonWidget(this.width/2 + 4,this.height - 20 - 6,150,20, new TranslatableText("gui.done"), (button) -> {
+        doneButton = addDrawableChild(new ButtonWidget(this.width/2 + 4,this.height - 20 - 6,150,20, Text.translatable("gui.done"), (button) -> {
             client.setScreen(parent);
             onClose.invoke(true, this.config, valueSetters);
         }));
-        addDrawableChild(new ButtonWidget(this.width/2 - 150 - 4,this.height - 20 - 6,150,20, new TranslatableText("gui.cancel"), (button) -> {
+        addDrawableChild(new ButtonWidget(this.width/2 - 150 - 4,this.height - 20 - 6,150,20, Text.translatable("gui.cancel"), (button) -> {
             client.setScreen(parent);
             onClose.invoke(false, this.config, valueSetters);
         }));
-        addDrawableChild(new ButtonWidget(this.width - 50 - 6, 6, 50, 20, new TranslatableText("controls.reset"), (button) -> {
+        addDrawableChild(new ButtonWidget(this.width - 50 - 6, 6, 50, 20, Text.translatable("controls.reset"), (button) -> {
             try {
                 C defaultConfig = (C) config.getClass().getConstructor().newInstance();
                 for (ConfigEntry entry : entries.values()) {
@@ -196,11 +195,11 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
                     ClickableWidget widget = provider.create(annotation, sx, sy, 200, 20, field, config, getStringer(stringerName));
 
                     String tooltipKey = translationKeyPrefix + field.getName() + ".tooltip";
-                    TranslatableText tooltip = null;
-                    if(I18n.hasTranslation(tooltipKey)) tooltip = new TranslatableText(tooltipKey);
+                    Text tooltip = null;
+                    if(I18n.hasTranslation(tooltipKey)) tooltip = Text.translatable(tooltipKey);
                     entries.put(field.getName(), new ConfigEntry(field.getName(), field, widget.y, widget.x, widget.getHeight(), widget.getWidth(), widget, tooltip));
                     valueSetters.add(new EntryValueSetter<>(field, ((ValueHolder<?>) widget)::getValue));
-                    list.addSetting(new Setting(widget, new TranslatableText(translationKeyPrefix+field.getName())));
+                    list.addSetting(new Setting(widget, Text.translatable(translationKeyPrefix+field.getName())));
                     sy += widget.getHeight() + 10;
                 }
             }
@@ -209,7 +208,7 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
         }
     }
 
-    protected static record ConfigEntry(String name, Field field, int y, int x, int height, int width, ClickableWidget widget, TranslatableText tooltip) {}
+    protected static record ConfigEntry(String name, Field field, int y, int x, int height, int width, ClickableWidget widget, Text tooltip) {}
     public static record EntryValueSetter<V>(Field field, Supplier<V> valueSupplier){
         public <T extends ModConfig> void apply(T config) {
             try {

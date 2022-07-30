@@ -9,7 +9,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -23,17 +22,17 @@ import java.util.Objects;
 public class CompassRenderer {
     private static final Identifier MAP_ICONS_TEXTURE = new Identifier(Main.MODID, "textures/map/compass.png");
     private static final RenderLayer MAP_ICONS_RENDER_LAYER = RenderLayer.getText(MAP_ICONS_TEXTURE);
-    private static final TranslatableText[] CARDINAL_STRINGS = new TranslatableText[]{
-            new TranslatableText("text.mapcompass.map.cardinal_north"),
-            new TranslatableText("text.mapcompass.map.cardinal_east"),
-            new TranslatableText("text.mapcompass.map.cardinal_south"),
-            new TranslatableText("text.mapcompass.map.cardinal_west")
+    private static final Text[] CARDINAL_STRINGS = new Text[]{
+            Text.translatable("text.mapcompass.map.cardinal_north"),
+            Text.translatable("text.mapcompass.map.cardinal_east"),
+            Text.translatable("text.mapcompass.map.cardinal_south"),
+            Text.translatable("text.mapcompass.map.cardinal_west")
     };
-    private static final TranslatableText[] CARDINAL_STRINGS_REVERSE = new TranslatableText[]{
-            new TranslatableText("text.mapcompass.map.cardinal_north"),
-            new TranslatableText("text.mapcompass.map.cardinal_west"),
-            new TranslatableText("text.mapcompass.map.cardinal_south"),
-            new TranslatableText("text.mapcompass.map.cardinal_east")
+    private static final Text[] CARDINAL_STRINGS_REVERSE = new Text[]{
+            Text.translatable("text.mapcompass.map.cardinal_north"),
+            Text.translatable("text.mapcompass.map.cardinal_west"),
+            Text.translatable("text.mapcompass.map.cardinal_south"),
+            Text.translatable("text.mapcompass.map.cardinal_east")
     };
     private static final Vec3f[] CARDINAL_ORIGIN_OFFSETS = new Vec3f[]{
             new Vec3f(-0.5f, -1, 0),
@@ -85,7 +84,7 @@ public class CompassRenderer {
 
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         Objects.requireNonNull(textRenderer);
-        TranslatableText[] cardinals = Main.CONFIG.reverseEW ? CARDINAL_STRINGS_REVERSE : CARDINAL_STRINGS;
+        Text[] cardinals = Main.CONFIG.reverseEW ? CARDINAL_STRINGS_REVERSE : CARDINAL_STRINGS;
         for (int i = 0; i < cardinals.length; i++) {
             Text cardinal = cardinals[i];
             Vec3f originOffset = CARDINAL_ORIGIN_OFFSETS[i];

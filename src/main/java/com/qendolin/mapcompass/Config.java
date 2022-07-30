@@ -2,7 +2,7 @@ package com.qendolin.mapcompass;
 
 import com.qendolin.mapcompass.config.Entry;
 import com.qendolin.mapcompass.config.ModConfig;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec2f;
 
 public class Config implements ModConfig {
@@ -28,11 +28,11 @@ public class Config implements ModConfig {
         NONE(0, 0), DOWN(0, 1), DOWN_OUT(-1, 1), OUT(-1, 0), UP_OUT(-1, -1),
         UP(0, -1), UP_IN(1, -1), IN(1, 0), DOWn_IN(1, 1);
 
-        private final TranslatableText text;
+        private final Text text;
         public final Vec2f vec;
 
         CompassOffset(float fx, float fy) {
-            this.text = new TranslatableText("text.mapcompass.option.offset." + this.name().toLowerCase());
+            this.text = Text.translatable("text.mapcompass.option.offset." + this.name().toLowerCase());
             this.vec = new Vec2f(fx, fy);
         }
 
@@ -45,11 +45,11 @@ public class Config implements ModConfig {
     public enum CompassSize {
         AUTOMATIC(0), SMALL(1f), MEDIUM(1.5f), LARGE(2f);
 
-        private final TranslatableText text;
+        private final Text text;
         public final float scale;
 
         CompassSize(float scale) {
-            this.text = new TranslatableText("text.mapcompass.option.size." + this.name().toLowerCase());
+            this.text = Text.translatable("text.mapcompass.option.size." + this.name().toLowerCase());
             this.scale = scale;
         }
 
@@ -62,10 +62,10 @@ public class Config implements ModConfig {
     public enum CompassSide {
         AUTOMATIC, LEFT, RIGHT, HIDDEN;
 
-        private final TranslatableText text;
+        private final Text text;
 
         CompassSide() {
-            this.text = new TranslatableText("text.mapcompass.option.side." + this.name().toLowerCase());
+            this.text = Text.translatable("text.mapcompass.option.side." + this.name().toLowerCase());
         }
 
         @Override
