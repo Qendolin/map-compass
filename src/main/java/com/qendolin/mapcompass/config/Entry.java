@@ -1,5 +1,7 @@
 package com.qendolin.mapcompass.config;
 
+import net.minecraft.text.Text;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -8,10 +10,10 @@ import java.util.function.Function;
 
 public abstract class Entry {
     static void init() {
-        ConfigScreen.registerWidgetFactory(IntRange.class, (a, x, y, w, h, f, o, s) -> Widgets.intRange(x, y, w, a.min(), a.max(), a.step(), f.getInt(o), (Function<Integer, String>) s));
-        ConfigScreen.registerWidgetFactory(FloatRange.class, (a, x, y, w, h, f, o, s) -> Widgets.floatRange(x, y, w, a.min(), a.max(), a.step(), f.getFloat(o), (Function<Float, String>) s));
-        ConfigScreen.registerWidgetFactory(ToggleButton.class, (a, x, y, w, h, f, o, s) -> Widgets.toggleButton(x, y, w, f.getBoolean(o), (Function<Boolean, String>) s));
-        ConfigScreen.registerWidgetFactory(EnumButton.class, (a, x, y, w, h, f, o, s) -> Widgets.enumButton(x, y, w, (Enum<?>) f.get(o), (Function<Enum<?>, String>) s));
+        ConfigScreen.registerWidgetFactory(IntRange.class, (a, x, y, w, h, f, o, s) -> Widgets.intRange(x, y, w, a.min(), a.max(), a.step(), f.getInt(o), (Function<Integer, Text>) s));
+        ConfigScreen.registerWidgetFactory(FloatRange.class, (a, x, y, w, h, f, o, s) -> Widgets.floatRange(x, y, w, a.min(), a.max(), a.step(), f.getFloat(o), (Function<Float, Text>) s));
+        ConfigScreen.registerWidgetFactory(ToggleButton.class, (a, x, y, w, h, f, o, s) -> Widgets.toggleButton(x, y, w, f.getBoolean(o), (Function<Boolean, Text>) s));
+        ConfigScreen.registerWidgetFactory(EnumButton.class, (a, x, y, w, h, f, o, s) -> Widgets.enumButton(x, y, w, (Enum<?>) f.get(o), (Function<Enum<?>, Text>) s));
     }
 
     @Retention(RetentionPolicy.RUNTIME)

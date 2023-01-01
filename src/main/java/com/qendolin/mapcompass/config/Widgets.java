@@ -8,23 +8,23 @@ import net.minecraft.text.Text;
 import java.util.function.Function;
 
 public class Widgets {
-    public static RangeWidget<Integer> intRange(int x, int y, int width, int min, int max, int step, int value, Function<Integer, String> messageMapper) {
-        if(messageMapper == null) messageMapper = v -> String.format("%d", v);
+    public static RangeWidget<Integer> intRange(int x, int y, int width, int min, int max, int step, int value, Function<Integer, Text> messageMapper) {
+        if(messageMapper == null) messageMapper = v -> Text.literal(String.format("%d", v));
         return new RangeWidget<>(x, y, width, value, v -> RangeWidget.mapIntToRange(v, min, max, step), messageMapper);
     }
 
-    public static RangeWidget<Float> floatRange(int x, int y, int width, float min, float max, float step, float value, Function<Float, String> messageMapper) {
-        if(messageMapper == null) messageMapper = v -> String.format("%.4f", v).replaceAll("(?<=[\\.,]\\d{1,4})0+$", "");
+    public static RangeWidget<Float> floatRange(int x, int y, int width, float min, float max, float step, float value, Function<Float, Text> messageMapper) {
+        if(messageMapper == null) messageMapper = v -> Text.literal(String.format("%.4f", v).replaceAll("(?<=[\\.,]\\d{1,4})0+$", ""));
         return new RangeWidget<>(x, y, width, value, (v) -> RangeWidget.mapFloatToRange(v, min, max, step), messageMapper);
     }
 
-    public static ToggleButtonWidget toggleButton(int x, int y, int width, boolean value, Function<Boolean, String> messageMapper) {
-        if(messageMapper == null) messageMapper = v -> v ? "On" : "Off";
+    public static ToggleButtonWidget toggleButton(int x, int y, int width, boolean value, Function<Boolean, Text> messageMapper) {
+        if(messageMapper == null) messageMapper = v -> v ? Text.translatable("options.on") : Text.translatable("options.off");
         return new ToggleButtonWidget(x, y, width, value, messageMapper);
     }
 
-    public static ClickableWidget enumButton(int x, int y, int width, Enum<?> value, Function<Enum<?>, String> messageMapper) {
-        if(messageMapper == null) messageMapper = Object::toString;
+    public static ClickableWidget enumButton(int x, int y, int width, Enum<?> value, Function<Enum<?>, Text> messageMapper) {
+        if(messageMapper == null) messageMapper = o -> Text.literal(o.toString());
         return new EnumButtonWidget(x, y, width, value, messageMapper);
     }
 }
@@ -36,9 +36,9 @@ interface ValueHolder<V> {
 
 class RangeWidget<T extends Number> extends SliderWidget implements ValueHolder<T> {
     private final Function<Double, T> valueMapper;
-    private final Function<T, String> messageMapper;
+    private final Function<T, Text> messageMapper;
     private T mappedValue;
-    public RangeWidget(int x, int y, int width, T value, Function<Double, T> valueMapper, Function<T, String> messageMapper) {
+    public RangeWidget(int x, int y, int width, T value, Function<Double, T> valueMapper, Function<T, Text> messageMapper) {
         super(x, y, width, 20, null, 0);
         this.valueMapper = valueMapper;
         this.messageMapper = messageMapper;
@@ -71,7 +71,7 @@ class RangeWidget<T extends Number> extends SliderWidget implements ValueHolder<
 
     @Override
     protected void updateMessage() {
-        setMessage(Text.literal(messageMapper.apply(mappedValue)));
+        setMessage(messageMapper.apply(mappedValue));
     }
 
     @Override
@@ -93,10 +93,10 @@ class RangeWidget<T extends Number> extends SliderWidget implements ValueHolder<
 }
 
 class ToggleButtonWidget extends ButtonWidget implements ValueHolder<Boolean> {
-    private final Function<Boolean, String> messageMapper;
+    private final Function<Boolean, Text> messageMapper;
     private boolean value;
-    public ToggleButtonWidget(int x, int y, int width, boolean value, Function<Boolean, String> messageMapper) {
-        super(x, y, width, 20, null, null);
+    public ToggleButtonWidget(int x, int y, int width, boolean value, Function<Boolean, Text> messageMapper) {
+        super(x, y, width, 20, null, null, ButtonWidget.DEFAULT_NARRATION_SUPPLIER);
         this.messageMapper = messageMapper;
         this.value = value;
         updateMessage();
@@ -109,7 +109,7 @@ class ToggleButtonWidget extends ButtonWidget implements ValueHolder<Boolean> {
     }
 
     protected void updateMessage() {
-        setMessage(Text.literal(messageMapper.apply(value)));
+        setMessage(messageMapper.apply(value));
     }
 
     @Override
@@ -125,11 +125,11 @@ class ToggleButtonWidget extends ButtonWidget implements ValueHolder<Boolean> {
 }
 
 class EnumButtonWidget extends ButtonWidget implements ValueHolder<Enum<?>> {
-    private final Function<Enum<?>, String> messageMapper;
+    private final Function<Enum<?>, Text> messageMapper;
     private final Enum<?>[] values;
     private int index;
-    public EnumButtonWidget(int x, int y, int width, Enum<?> value, Function<Enum<?>, String> messageMapper) {
-        super(x, y, width, 20, null, null);
+    public EnumButtonWidget(int x, int y, int width, Enum<?> value, Function<Enum<?>, Text> messageMapper) {
+        super(x, y, width, 20, null, null, ButtonWidget.DEFAULT_NARRATION_SUPPLIER);
         this.messageMapper = messageMapper;
         this.values = value.getClass().getEnumConstants();
         this.index = value.ordinal();
@@ -145,7 +145,7 @@ class EnumButtonWidget extends ButtonWidget implements ValueHolder<Enum<?>> {
     }
 
     protected void updateMessage() {
-        setMessage(Text.literal(messageMapper.apply(getValue())));
+        setMessage(messageMapper.apply(getValue()));
     }
 
     @Override

@@ -41,7 +41,7 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
     private SettingList list;
 
     public interface WidgetFactory<A extends Annotation> {
-        ClickableWidget create(A a, int x, int y, int w, int h, Field f, Object o, Function<?, String> s) throws IllegalAccessException;
+        ClickableWidget create(A a, int x, int y, int w, int h, Field f, Object o, Function<?, Text> s) throws IllegalAccessException;
     }
 
     public ConfigScreen(Screen parent, C config) {
@@ -99,7 +99,7 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
             int centerY = y + widget.getHeight() / 2 - client.textRenderer.fontHeight / 2;
             DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, name, 20, centerY, 0xffffff);
 
-            widget.y = y;
+            widget.setY(y);
             widget.render(matrices, mouseX, mouseY, tickDelta);
         }
     }
@@ -149,7 +149,7 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
 
 
         for (ConfigEntry entry : entries.values()) {
-            if(entry.tooltip != null && mouseX >= 20 && mouseX <= entry.widget.x - 2 && mouseY > entry.widget.y && mouseY < entry.widget.y + entry.height) {
+            if(entry.tooltip != null && mouseX >= 20 && mouseX <= entry.widget.getX() - 2 && mouseY > entry.widget.getY() && mouseY < entry.widget.getY() + entry.height) {
                 renderTooltip(matrices, entry.tooltip, mouseX, mouseY);
             }
         }
@@ -165,15 +165,16 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
 
         List<EntryValueSetter<?>> valueSetters = new ArrayList<>();
 
-        doneButton = addDrawableChild(new ButtonWidget(this.width/2 + 4,this.height - 20 - 6,150,20, Text.translatable("gui.done"), (button) -> {
+
+        doneButton = addDrawableChild(ButtonWidget.builder(Text.translatable("gui.done"), (button) -> {
             client.setScreen(parent);
             onClose.invoke(true, this.config, valueSetters);
-        }));
-        addDrawableChild(new ButtonWidget(this.width/2 - 150 - 4,this.height - 20 - 6,150,20, Text.translatable("gui.cancel"), (button) -> {
+        }).position(this.width/2 + 4,this.height - 20 - 6).size(150, 20).build());
+        addDrawableChild(        ButtonWidget.builder(Text.translatable("gui.cancel"), (button) -> {
             client.setScreen(parent);
             onClose.invoke(false, this.config, valueSetters);
-        }));
-        addDrawableChild(new ButtonWidget(this.width - 50 - 6, 6, 50, 20, Text.translatable("controls.reset"), (button) -> {
+        }).position(this.width/2 - 150 - 4,this.height - 20 - 6).size(150, 20).build());
+        addDrawableChild(ButtonWidget.builder(Text.translatable("controls.reset"), (button) -> {
             try {
                 C defaultConfig = (C) config.getClass().getConstructor().newInstance();
                 for (ConfigEntry entry : entries.values()) {
@@ -182,7 +183,7 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
             } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 Main.LOGGER.fatal(e);
             }
-        }));
+        }).position(this.width - 50 - 6, 6).size(50, 20).build());
 
         int sx = width-200-20;
         int sy = 40;
@@ -197,7 +198,7 @@ public class ConfigScreen<C extends ModConfig> extends Screen {
                     String tooltipKey = translationKeyPrefix + field.getName() + ".tooltip";
                     Text tooltip = null;
                     if(I18n.hasTranslation(tooltipKey)) tooltip = Text.translatable(tooltipKey);
-                    entries.put(field.getName(), new ConfigEntry(field.getName(), field, widget.y, widget.x, widget.getHeight(), widget.getWidth(), widget, tooltip));
+                    entries.put(field.getName(), new ConfigEntry(field.getName(), field, widget.getY(), widget.getX(), widget.getHeight(), widget.getWidth(), widget, tooltip));
                     valueSetters.add(new EntryValueSetter<>(field, ((ValueHolder<?>) widget)::getValue));
                     list.addSetting(new Setting(widget, Text.translatable(translationKeyPrefix+field.getName())));
                     sy += widget.getHeight() + 10;
