@@ -25,16 +25,16 @@ public class CompassRenderer {
     private static final Identifier MAP_ICONS_TEXTURE = new Identifier(Main.MODID, "textures/map/compass.png");
     private static final RenderLayer MAP_ICONS_RENDER_LAYER = RenderLayer.getText(MAP_ICONS_TEXTURE);
     private static final Text[] CARDINAL_STRINGS = new Text[]{
-            Text.translatable("text.mapcompass.map.cardinal_north"),
-            Text.translatable("text.mapcompass.map.cardinal_east"),
-            Text.translatable("text.mapcompass.map.cardinal_south"),
-            Text.translatable("text.mapcompass.map.cardinal_west")
+            Text.translatable("´mapcompass.map.cardinal_north"),
+            Text.translatable("´mapcompass.map.cardinal_east"),
+            Text.translatable("´mapcompass.map.cardinal_south"),
+            Text.translatable("´mapcompass.map.cardinal_west")
     };
     private static final Text[] CARDINAL_STRINGS_REVERSE = new Text[]{
-            Text.translatable("text.mapcompass.map.cardinal_north"),
-            Text.translatable("text.mapcompass.map.cardinal_west"),
-            Text.translatable("text.mapcompass.map.cardinal_south"),
-            Text.translatable("text.mapcompass.map.cardinal_east")
+            Text.translatable("´mapcompass.map.cardinal_north"),
+            Text.translatable("´mapcompass.map.cardinal_west"),
+            Text.translatable("´mapcompass.map.cardinal_south"),
+            Text.translatable("´mapcompass.map.cardinal_east")
     };
     private static final Vector3f[] CARDINAL_ORIGIN_OFFSETS = new Vector3f[]{
             new Vector3f(-0.5f, -1, 0),
@@ -53,21 +53,22 @@ public class CompassRenderer {
     private static final float CARDINAL_DISTANCE = 9;
 
     public static void drawCompass(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ItemStack map) {
-        if (Main.CONFIG.side == Config.CompassSide.HIDDEN) return;
+        Config config = Main.getConfig();
+        if (config.side == Config.CompassSide.HIDDEN) return;
         PlayerEntity player = MinecraftClient.getInstance().player;
         if (player == null) return;
         // Map is being unequipped
         if (player.getStackInHand(Hand.MAIN_HAND) != map && player.getStackInHand(Hand.OFF_HAND) != map) return;
 
         Vector3f compassPos = new Vector3f(LEFT_COMPASS_POS);
-        compassPos.add(Main.CONFIG.offsetX, Main.CONFIG.offsetY, 0);
+        compassPos.add(config.offsetX, config.offsetY, 0);
         boolean renderOnRight = renderOnRight(player, map);
         if (renderOnRight) {
             compassPos.set(128 - compassPos.x, compassPos.y, compassPos.z);
         }
 
         float size = getCompassScale();
-        Vec2f compassSizeOffset = Main.CONFIG.offsetDirection.vec;
+        Vec2f compassSizeOffset = config.offsetDirection.vec;
         if(renderOnRight) compassSizeOffset = new Vec2f(-compassSizeOffset.x, compassSizeOffset.y);
         compassPos.add(compassSizeOffset.x * (CARDINAL_DISTANCE+1) * (size-1), compassSizeOffset.y * (CARDINAL_DISTANCE+1) * (size-1), 0);
 
@@ -86,7 +87,7 @@ public class CompassRenderer {
 
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         Objects.requireNonNull(textRenderer);
-        Text[] cardinals = Main.CONFIG.reverseEW ? CARDINAL_STRINGS_REVERSE : CARDINAL_STRINGS;
+        Text[] cardinals = config.reverseEW ? CARDINAL_STRINGS_REVERSE : CARDINAL_STRINGS;
         for (int i = 0; i < cardinals.length; i++) {
             Text cardinal = cardinals[i];
             Vector3f originOffset = CARDINAL_ORIGIN_OFFSETS[i];
@@ -99,13 +100,13 @@ public class CompassRenderer {
             matrices.translate(x, y, compassPos.z + offset.z);
             matrices.scale(scale, scale, 1.0F);
             matrices.translate(originOffset.x * width, originOffset.y * textRenderer.fontHeight, 0);
-            textRenderer.draw(cardinal, 0.0F, 0.0F, 0xffffffff, false, matrices.peek().getPositionMatrix(), vertexConsumers, false, 0, light);
+            textRenderer.draw(cardinal, 0f, 0f, 0xffffffff, false, matrices.peek().getPositionMatrix(), vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
             matrices.pop();
         }
     }
 
     private static boolean renderOnRight(PlayerEntity player, ItemStack map) {
-        Config.CompassSide compassSide = Main.CONFIG.side;
+        Config.CompassSide compassSide = Main.getConfig().side;
 
         if (compassSide == Config.CompassSide.AUTOMATIC) {
             ItemStack mainItem = player.getStackInHand(Hand.MAIN_HAND);
@@ -119,7 +120,7 @@ public class CompassRenderer {
     }
 
     private static float getCompassScale() {
-        Config.CompassSize size = Main.CONFIG.size;
+        Config.CompassSize size = Main.getConfig().size;
 
         if(size == Config.CompassSize.AUTOMATIC) {
             double scaleFactor = MinecraftClient.getInstance().getWindow().getScaleFactor();
