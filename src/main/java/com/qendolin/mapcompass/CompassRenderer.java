@@ -25,16 +25,16 @@ public class CompassRenderer {
     private static final Identifier MAP_ICONS_TEXTURE = new Identifier(Main.MODID, "textures/map/compass.png");
     private static final RenderLayer MAP_ICONS_RENDER_LAYER = RenderLayer.getText(MAP_ICONS_TEXTURE);
     private static final Text[] CARDINAL_STRINGS = new Text[]{
-            Text.translatable("´mapcompass.map.cardinal_north"),
-            Text.translatable("´mapcompass.map.cardinal_east"),
-            Text.translatable("´mapcompass.map.cardinal_south"),
-            Text.translatable("´mapcompass.map.cardinal_west")
+            Text.translatable("mapcompass.map.cardinal_north"),
+            Text.translatable("mapcompass.map.cardinal_east"),
+            Text.translatable("mapcompass.map.cardinal_south"),
+            Text.translatable("mapcompass.map.cardinal_west")
     };
     private static final Text[] CARDINAL_STRINGS_REVERSE = new Text[]{
-            Text.translatable("´mapcompass.map.cardinal_north"),
-            Text.translatable("´mapcompass.map.cardinal_west"),
-            Text.translatable("´mapcompass.map.cardinal_south"),
-            Text.translatable("´mapcompass.map.cardinal_east")
+            Text.translatable("mapcompass.map.cardinal_north"),
+            Text.translatable("mapcompass.map.cardinal_west"),
+            Text.translatable("mapcompass.map.cardinal_south"),
+            Text.translatable("mapcompass.map.cardinal_east")
     };
     private static final Vector3f[] CARDINAL_ORIGIN_OFFSETS = new Vector3f[]{
             new Vector3f(-0.5f, -1, 0),
