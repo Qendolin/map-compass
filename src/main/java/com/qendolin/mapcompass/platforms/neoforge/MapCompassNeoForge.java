@@ -1,5 +1,5 @@
 //? if neoforge {
-package com.qendolin.mapcompass.platforms.neoforge;
+/*package com.qendolin.mapcompass.platforms.neoforge;
 
 import com.qendolin.mapcompass.MapCompassInit;
 import com.qendolin.mapcompass.config.ConfigGUI;
@@ -16,14 +16,14 @@ public class MapCompassNeoForge {
             Minecraft.getInstance().execute(MapCompassInit::initialize);
 
             //? if <1.20.6 {
-            ModLoadingContext.get().registerExtensionPoint(net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
+            /^ModLoadingContext.get().registerExtensionPoint(net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory(
                     (client, parent) -> ConfigGUI.create(parent)));
-            //?} else {
-            /*ModLoadingContext.get().registerExtensionPoint(net.neoforged.neoforge.client.gui.IConfigScreenFactory.class,
+            ^///?} else {
+            ModLoadingContext.get().registerExtensionPoint(net.neoforged.neoforge.client.gui.IConfigScreenFactory.class,
                 () -> (modContainer, parent) -> ConfigGUI.create(parent));
-            *///?}
+            //?}
         });
     }
 }
-//?}
+*///?}

@@ -1,5 +1,5 @@
 //? if fabric {
-/*package com.qendolin.mapcompass.platforms.fabric;
+package com.qendolin.mapcompass.platforms.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
 import com.qendolin.mapcompass.MapCompassInit;
@@ -10,4 +10,4 @@ public class MapCompassFabric implements ClientModInitializer {
 		MapCompassInit.initialize();
 	}
 }
-*///?}
+//?}

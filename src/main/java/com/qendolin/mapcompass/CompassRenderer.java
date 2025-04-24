@@ -106,16 +106,16 @@ public class CompassRenderer {
 
     private static void addQuad(VertexConsumer vertices, Matrix4f matrix, int light) {
         //? if >1.20.6 {
-        /*vertices.addVertex(matrix, -1.0F, 1.0F, 0).setColor(255, 255, 255, 255).setUv(0, 0).setLight(light);
+        vertices.addVertex(matrix, -1.0F, 1.0F, 0).setColor(255, 255, 255, 255).setUv(0, 0).setLight(light);
         vertices.addVertex(matrix, 1.0F, 1.0F, 0).setColor(255, 255, 255, 255).setUv(1, 0).setLight(light);
         vertices.addVertex(matrix, 1.0F, -1.0F, 0).setColor(255, 255, 255, 255).setUv(1, 1).setLight(light);
         vertices.addVertex(matrix, -1.0F, -1.0F, 0).setColor(255, 255, 255, 255).setUv(0, 1).setLight(light);
-        *///?} else {
-        vertices.vertex(matrix, -1.0F, 1.0F, 0).color(255, 255, 255, 255).uv(0, 0).uv2(light).endVertex();
+        //?} else {
+        /*vertices.vertex(matrix, -1.0F, 1.0F, 0).color(255, 255, 255, 255).uv(0, 0).uv2(light).endVertex();
         vertices.vertex(matrix, 1.0F, 1.0F, 0).color(255, 255, 255, 255).uv(1, 0).uv2(light).endVertex();
         vertices.vertex(matrix, 1.0F, -1.0F, 0).color(255, 255, 255, 255).uv(1, 1).uv2(light).endVertex();
         vertices.vertex(matrix, -1.0F, -1.0F, 0).color(255, 255, 255, 255).uv(0, 1).uv2(light).endVertex();
-        //?}
+        *///?}
     }
 
     private static boolean renderOnRight(LocalPlayer player, ItemStack map) {

@@ -19,10 +19,10 @@ public class MapCompassInit {
 
 	public static ResourceLocation getResourceLocation(String path) {
 		//? if >=1.21 {
-		/*return ResourceLocation.fromNamespaceAndPath(MapCompassInit.MODID, path);
-		*///?} else {
-        //noinspection removal
+		return ResourceLocation.fromNamespaceAndPath(MapCompassInit.MODID, path);
+		//?} else {
+        /*//noinspection removal
         return new ResourceLocation(MapCompassInit.MODID, path);
-		//?}
+		*///?}
 	}
 }

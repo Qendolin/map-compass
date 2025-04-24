@@ -18,10 +18,10 @@ public abstract class HeldItemRendererMixin {
         at = @At(
             value = "INVOKE",
             //? if >=1.21.2 {
-            /*target = "Lnet/minecraft/client/renderer/MapRenderer;render(Lnet/minecraft/client/renderer/state/MapRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ZI)V",
-            *///?} else {
-            target = "Lnet/minecraft/client/gui/MapRenderer;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/level/saveddata/maps/MapItemSavedData;ZI)V",
-            //?}
+            target = "Lnet/minecraft/client/renderer/MapRenderer;render(Lnet/minecraft/client/renderer/state/MapRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ZI)V",
+            //?} else {
+            /*target = "Lnet/minecraft/client/gui/MapRenderer;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/level/saveddata/maps/MapItemSavedData;ZI)V",
+            *///?}
             shift = At.Shift.AFTER))
     private void afterDraw(PoseStack matrices, MultiBufferSource buffer, int packedLight, ItemStack stack, CallbackInfo ci) {
         CompassRenderer.drawCompass(matrices, buffer, packedLight, stack);

@@ -1,5 +1,5 @@
 //? if fabric {
-/*package com.qendolin.mapcompass.platforms.fabric;
+package com.qendolin.mapcompass.platforms.fabric;
 
 import com.qendolin.mapcompass.config.ConfigGUI;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
@@ -10,4 +10,4 @@ public class ModMenuIntegration implements ModMenuApi {
         return ConfigGUI::create;
     }
 }
-*///?}
+//?}

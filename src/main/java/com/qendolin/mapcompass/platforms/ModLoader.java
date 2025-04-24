@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 //? if fabric {
-/*import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.ModContainer;
 
@@ -29,8 +29,8 @@ public final class ModLoader {
         return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
     }
 }
-*///?} elif neoforge {
-import net.neoforged.fml.ModContainer;
+//?} elif neoforge {
+/*import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.loading.FMLPaths;
@@ -65,7 +65,7 @@ public final class ModLoader {
         return FMLLoader.getDist().isClient();
     }
 }
-//?} elif forge {
+*///?} elif forge {
 /*import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
