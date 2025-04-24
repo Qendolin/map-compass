@@ -1,19 +1,20 @@
-package com.qendolin.mapcompass;
+package com.qendolin.mapcompass.config;
 
+import com.qendolin.mapcompass.MapCompassInit;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.util.Pair;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 public class ConfigGUI {
-    public static final String LANG_KEY_PREFIX = Main.MODID + ".config";
+    public static final String LANG_KEY_PREFIX = MapCompassInit.MODID + ".config";
 
     protected final Config config;
     protected final Config defaults;
@@ -26,9 +27,9 @@ public class ConfigGUI {
     public final Option<Integer> offsetX;
     public final Option<Integer> offsetY;
 
-    protected final List<Pair<ConfigCategory.Builder, List<Pair<OptionGroup.Builder, List<Option<?>>>>>> categories = new ArrayList<>();
+    protected final List<Tuple<ConfigCategory.Builder, List<Tuple<OptionGroup.Builder, List<Option<?>>>>>> categories = new ArrayList<>();
 
-    protected final List<Pair<OptionGroup.Builder, List<Option<?>>>> generalCategory = new ArrayList<>();
+    protected final List<Tuple<OptionGroup.Builder, List<Option<?>>>> generalCategory = new ArrayList<>();
 
     protected final List<Option<?>> appearanceGroup = new ArrayList<>();
 
@@ -83,16 +84,16 @@ public class ConfigGUI {
             .description(OptionDescription.createBuilder().text(simpleDescription("offsetY")).build())
             .build();
 
-        categories.add(new Pair<>(ConfigCategory.createBuilder()
+        categories.add(new Tuple<>(ConfigCategory.createBuilder()
             .name(categoryLabel("general")), generalCategory));
-        generalCategory.add(new Pair<>(OptionGroup.createBuilder()
+        generalCategory.add(new Tuple<>(OptionGroup.createBuilder()
             .name(groupLabel("general.appearance")), appearanceGroup));
 
-        appearanceGroup.addAll(List.of(side, reverseEW, size, offsetDirection, offsetX, offsetY));
+        appearanceGroup.addAll(List.of(enabled, side, reverseEW, size, offsetDirection, offsetX, offsetY));
     }
 
     public static Screen create(Screen parent) {
-        YetAnotherConfigLib yacl = YetAnotherConfigLib.create(Main.getConfigInstance(),
+        YetAnotherConfigLib yacl = YetAnotherConfigLib.create(ConfigManager.handler(),
             (defaults, config, builder) -> new ConfigGUI(defaults, config).assemble(builder));
         return yacl.generateScreen(parent);
     }
@@ -100,16 +101,16 @@ public class ConfigGUI {
     public YetAnotherConfigLib.Builder assemble(YetAnotherConfigLib.Builder builder) {
         builder = builder
             .save(() -> {
-                Main.getConfigInstance().save();
+                ConfigManager.handler().save();
             })
-            .title(Text.translatable(LANG_KEY_PREFIX + ".title"));
+            .title(Component.translatable(LANG_KEY_PREFIX + ".title"));
 
-        for (Pair<ConfigCategory.Builder, List<Pair<OptionGroup.Builder, List<Option<?>>>>> categoryPair : categories) {
-            ConfigCategory.Builder categoryBuilder = categoryPair.getLeft();
-            for (Pair<OptionGroup.Builder, List<Option<?>>> groupPair : categoryPair.getRight()) {
-                if (groupPair.getRight().isEmpty()) continue;
-                OptionGroup.Builder groupBuilder = groupPair.getLeft();
-                groupBuilder.options(groupPair.getRight());
+        for (Tuple<ConfigCategory.Builder, List<Tuple<OptionGroup.Builder, List<Option<?>>>>> categoryPair : categories) {
+            ConfigCategory.Builder categoryBuilder = categoryPair.getA();
+            for (Tuple<OptionGroup.Builder, List<Option<?>>> groupPair : categoryPair.getB()) {
+                if (groupPair.getB().isEmpty()) continue;
+                OptionGroup.Builder groupBuilder = groupPair.getA();
+                groupBuilder.options(groupPair.getB());
                 categoryBuilder.group(groupBuilder.build());
             }
             builder.category(categoryBuilder.build());
@@ -124,32 +125,32 @@ public class ConfigGUI {
             .description(OptionDescription.of(optionDescription(key)));
     }
 
-    private static <T extends Enum<?>> Function<T, Text> translateEnumValue(String name) {
+    private static <T extends Enum<?>> Function<T, Component> translateEnumValue(String name) {
         final String prefix = LANG_KEY_PREFIX+".entry."+name+".";
-        return value -> Text.translatable(prefix+value.name().toLowerCase());
+        return value -> Component.translatable(prefix+value.name().toLowerCase());
     }
 
-    private static Text categoryLabel(String key) {
-        return Text.translatable(LANG_KEY_PREFIX + ".category." + key);
+    private static Component categoryLabel(String key) {
+        return Component.translatable(LANG_KEY_PREFIX + ".category." + key);
     }
 
-    private static Text groupLabel(String key) {
-        return Text.translatable(LANG_KEY_PREFIX + ".group." + key);
+    private static Component groupLabel(String key) {
+        return Component.translatable(LANG_KEY_PREFIX + ".group." + key);
     }
 
-    private static Text optionLabel(String key) {
-        return Text.translatable(LANG_KEY_PREFIX + ".entry." + key);
+    private static Component optionLabel(String key) {
+        return Component.translatable(LANG_KEY_PREFIX + ".entry." + key);
     }
 
-    private static Text simpleDescription(String key) {
-        return Text.translatable(LANG_KEY_PREFIX + ".entry." + key + ".description");
+    private static Component simpleDescription(String key) {
+        return Component.translatable(LANG_KEY_PREFIX + ".entry." + key + ".description");
     }
-    private static Text enumDescription(String key, Enum<?> value) {
-        return Text.translatable(LANG_KEY_PREFIX + ".entry." + key + "." + value.name().toLowerCase() + ".description");
+    private static Component enumDescription(String key, Enum<?> value) {
+        return Component.translatable(LANG_KEY_PREFIX + ".entry." + key + "." + value.name().toLowerCase() + ".description");
     }
 
-    private static Text optionDescription(String key) {
-        return Text.translatable(LANG_KEY_PREFIX + ".entry." + key + ".description");
+    private static Component optionDescription(String key) {
+        return Component.translatable(LANG_KEY_PREFIX + ".entry." + key + ".description");
     }
 
 }

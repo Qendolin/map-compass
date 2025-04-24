@@ -4,7 +4,7 @@
 build/
 out/
 classes/
-
+c
 # eclipse
 
 *.launch
@@ -31,3 +31,15 @@ bin/
 # fabric
 
 run/
+
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+# tokens
+local.properties
+
+.architectury-transformer/debug.log

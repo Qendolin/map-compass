@@ -1,8 +1,6 @@
-package com.qendolin.mapcompass;
+package com.qendolin.mapcompass.config;
 
-import dev.isxander.yacl3.api.NameableEnum;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.Vec2f;
+import net.minecraft.world.phys.Vec2;
 
 public class Config {
     public boolean enabled = true;
@@ -22,10 +20,10 @@ public class Config {
         NONE(0, 0), DOWN(0, 1), DOWN_OUT(-1, 1), OUT(-1, 0), UP_OUT(-1, -1),
         UP(0, -1), UP_IN(1, -1), IN(1, 0), DOWn_IN(1, 1);
 
-        public final Vec2f vec;
+        public final Vec2 vec;
 
         CompassOffset(float fx, float fy) {
-            this.vec = new Vec2f(fx, fy);
+            this.vec = new Vec2(fx, fy);
         }
     }
 
@@ -41,6 +39,6 @@ public class Config {
     }
 
     public enum CompassSide {
-        AUTOMATIC, LEFT, RIGHT, HIDDEN;
+        AUTOMATIC, LEFT, RIGHT;
     }
 }

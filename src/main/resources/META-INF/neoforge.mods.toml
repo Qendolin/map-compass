@@ -1,0 +1,23 @@
+modLoader = "javafml"
+loaderVersion = "*"
+license = "MPL-2.0"
+issueTrackerURL="https://github.com/Qendolin/mapcompass/issues/new"
+
+[[mods]]
+modId = "mapcompass"
+version = "${version}"
+displayName = "${name}"
+authors = "Qendolin"
+description = "Adds a compass to maps."
+logoFile = "assets/mapcompass/icon.png"
+logoBlur = false
+
+[[dependencies.mapcompass]]
+modId = "yet_another_config_lib_v3"
+mandatory = true
+versionRange = "[3.6.0,4.0.0)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[mixins]]
+config = "mapcompass.mixins.json"
