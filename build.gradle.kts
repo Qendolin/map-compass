@@ -128,7 +128,7 @@ publishMods {
     dryRun = modrinthToken == null || curseforgeToken == null
 
     displayName = "${mod.name} ${loader.replaceFirstChar { it.uppercase() }} ${property("mod.mc_title")}-${mod.version}"
-    version = mod.version
+    version = "${mod.version}+${minecraft}-${loader}"
     type = BETA
     changelog = rootProject.file("changelogs/${mod.version}.md").readText()
 
@@ -141,7 +141,9 @@ publishMods {
         targets.forEach(minecraftVersions::add)
         if (loader == "fabric") {
             requires("fabric-api")
+            optional("modmenu")
         }
+        requires("yacl")
     }
 
 //    curseforge {
